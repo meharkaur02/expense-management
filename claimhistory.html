@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim History Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .history-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+        .history-container h2 {
+            margin-bottom: 20px;
+        }
+        .history-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .history-container select,
+        .history-container input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .history-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .history-container button:hover {
+            opacity: 0.9;
+        }
+        .history-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .history-container table, th, td {
+            border: 1px solid #ccc;
+        }
+        .history-container th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="history-container">
+        <h2>Claim History Report</h2>
+        <form id="filter-form">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="all">All</option>
+                <option value="Submitted">Submitted</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Referred Back">Referred Back</option>
+            </select>
+
+            <label for="start-date">Start Date</label>
+            <input type="date" id="start-date" name="start_date">
+
+            <label for="end-date">End Date</label>
+            <input type="date" id="end-date" name="end_date">
+
+            <button type="button" onclick="filterClaims()">Filter</button>
+        </form>
+
+        <table id="claims-table">
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Employee ID</th>
+                    <th>Expense Type</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filtered claims will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function filterClaims() {
+            const status = document.getElementById('status').value;
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+
+            fetch('/filter-claims', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status, startDate, endDate })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.querySelector('#claims-table tbody');
+                tbody.innerHTML = '';
+                data.forEach(claim => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${claim.ClaimID}</td>
+                        <td>${claim.EmployeeID}</td>
+                        <td>${claim.ExpenseType}</td>
+                        <td>${claim.Description}</td>
+                        <td>${claim.Amount}</td>
+                        <td>${claim.DateSubmitted}</td>
+                        <td>${claim.Status}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
