@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raise Claim</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .claim-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .claim-container h2 {
+            margin-bottom: 20px;
+        }
+        .claim-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .claim-container select,
+        .claim-container input,
+        .claim-container textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .claim-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .claim-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="claim-container">
+        <h2>Raise Claim</h2>
+        <form action="/raise-claim" method="post">
+            <label for="expense-type">Expense Type</label>
+            <select id="expense-type" name="expense_type" required>
+                <option value="">Select Expense Type</option>
+                <option value="travel">Travel</option>
+                <option value="lodging">Lodging</option>
+                <option value="meals">Meals</option>
+                <option value="supplies">Supplies</option>
+                <option value="other">Other</option>
+            </select>
+            
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+            
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" name="amount" step="0.01" required>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
