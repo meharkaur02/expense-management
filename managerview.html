@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager's View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .claims-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+        .claims-container h2 {
+            margin-bottom: 20px;
+        }
+        .claims-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .claims-container table, th, td {
+            border: 1px solid #ccc;
+        }
+        .claims-container th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .claims-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .claims-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="claims-container">
+        <h2>Claims Pending Approval</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Employee ID</th>
+                    <th>Expense Type</th>
+                    <th>Amount</th>
+                    <th>Date Submitted</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for claim in pending_claims %}
+                <tr>
+                    <td>{{ claim.ClaimID }}</td>
+                    <td>{{ claim.EmployeeID }}</td>
+                    <td>{{ claim.ExpenseType }}</td>
+                    <td>{{ claim.Amount }}</td>
+                    <td>{{ claim.DateSubmitted }}</td>
+                    <td><a href="/approve-claim/{{ claim.ClaimID }}">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Approved Claims</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Employee ID</th>
+                    <th>Expense Type</th>
+                    <th>Amount</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for claim in approved_claims %}
+                <tr>
+                    <td>{{ claim.ClaimID }}</td>
+                    <td>{{ claim.EmployeeID }}</td>
+                    <td>{{ claim.ExpenseType }}</td>
+                    <td>{{ claim.Amount }}</td>
+                    <td>{{ claim.DateSubmitted }}</td>
+                    <td>{{ claim.Status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
