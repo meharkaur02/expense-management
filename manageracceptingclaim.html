@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Claim</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .claim-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+        }
+        .claim-container h2 {
+            margin-bottom: 20px;
+        }
+        .claim-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .claim-container input,
+        .claim-container textarea,
+        .claim-container select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .claim-container button {
+            width: 48%;
+            padding: 10px;
+            margin-right: 2%;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .claim-container button.reject {
+            background-color: #dc3545;
+        }
+        .claim-container button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="claim-container">
+        <h2>Approve Claim</h2>
+        <form action="/approve-claim/{{ claim.ClaimID }}" method="post">
+            <label for="employee-id">Employee ID</label>
+            <input type="text" id="employee-id" name="employee_id" value="{{ claim.EmployeeID }}" readonly>
+            
+            <label for="expense-type">Expense Type</label>
+            <input type="text" id="expense-type" name="expense_type" value="{{ claim.ExpenseType }}" readonly>
+            
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" readonly>{{ claim.Description }}</textarea>
+            
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" name="amount" value="{{ claim.Amount }}" readonly>
+            
+            <label for="date-submitted">Date Submitted</label>
+            <input type="text" id="date-submitted" name="date_submitted" value="{{ claim.DateSubmitted }}" readonly>
+            
+            <label for="manager-comments">Manager Comments</label>
+            <textarea id="manager-comments" name="manager_comments" rows="4" required></textarea>
+            
+            <button type="submit" name="action" value="approve">Approve</button>
+            <button type="submit" name="action" value="reject" class="reject">Reject</button>
+        </form>
+    </div>
+</body>
+</html>
